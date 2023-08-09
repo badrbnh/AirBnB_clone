@@ -9,14 +9,16 @@ class BaseModel:
         tFormat = "%Y-%m-%dT%H:%M:%S.%f"
         if not kwargs:
             self.id = str(uuid.uuid4())
-            self.created_at = datetime.datetime.now()
-            self.updated_at = self.created_at
+            self.created_at = datetime.datetime.utcnow()
+            self.updated_at = datetime.datetime.utcnow()
         else:
             for k, v in kwargs.items():
                 if k == "created_at" or k == "updated_at":
-                    self.__dict__[k] == datetime.datetime.strptime(v, tFormat)
+                    self.__dict__[k] = datetime.datetime.strptime(v, tFormat)
+                elif k[0] == "id":
+                    self.__dict__[k] = str(v)
                 else:
-                    self.__dict__[k] == v
+                    self.__dict__[k] = v
 
     def __str__(self):
         return f"[{self.__class__.__name__}] ({self.id}) {self.__dict__}"
