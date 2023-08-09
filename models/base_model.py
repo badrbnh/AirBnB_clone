@@ -6,27 +6,42 @@ import uuid
 
 class BaseModel:
     def __init__(self, *args, **kwargs):
-        tFormat = "%Y-%m-%dT%H:%M:%S.%f"
-        if not kwargs:
-            self.id = str(uuid.uuid4())
-            self.created_at = datetime.datetime.utcnow()
-            self.updated_at = datetime.datetime.utcnow()
+        """
+        Constructor for BaseModel class. Initializes instance
+        attributes based on provided
+        keyword arguments or generates default values for id, created_at,
+        and updated_at.
+        """
+        time_format = "%Y-%m-%dT%H:%M:%S.%f"
+        if kwargs:
+            for key, value in kwargs.items():
+                if key != "__class__":
+                    setattr(self, key, value)
+            self.created_at = datetime.strptime(self.created_at, time_format)
+            self.updated_at = datetime.strptime(self.updated_at, time_format)
         else:
-            for k, v in kwargs.items():
-                if k == "created_at" or k == "updated_at":
-                    self.__dict__[k] = datetime.datetime.strptime(v, tFormat)
-                elif k[0] == "id":
-                    self.__dict__[k] = str(v)
-                else:
-                    self.__dict__[k] = v
+            self.id = str(uuid.uuid4())
+            self.created_at = datetime.now()
+            self.updated_at = self.created_at
 
     def __str__(self):
+        """
+        Returns a string representation of the instance,
+        including its class name, id, and attributes.
+        """
         return f"[{self.__class__.__name__}] ({self.id}) {self.__dict__}"
 
     def save(self):
+        """
+        Updates the 'updated_at' attribute to the current datetime.
+        """
         self.updated_at = datetime.now()
 
     def to_dict(self):
+        """
+        Converts the instance attributes into a dictionary representation
+        with 'simple object type'.
+        """
         dict = {}
         dict["__class__"] = self.__class__.__name__
         for key, value in self.__dict__.items():
