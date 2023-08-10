@@ -15,26 +15,19 @@ class FileStorage:
         self.__objects[obj.__class__.__name__ + "." + obj.id] = obj
 
     def save(self):
-        if os.path.exists(self.__file_path):
-            with open(self.__file_path, "r") as f:
-                exist = json.load(f)
-        else:
-            exist = {}
-
-        exist.update({k: v.to_dict() for k, v in self.__objects.items()})
-
+        v = FileStorage.__objects
+        obj_dict = {k: v[k].to_dict() for k in v.keys()}
         with open(self.__file_path, "w") as f:
-            json.dump(exist, f)
+            json.dump(obj_dict, f)
 
     def reload(self):
-        from ..base_model import BaseModel
-
-        file_path = self.__file_path
-        if os.path.exists(file_path):
-            with open(file_path, "r") as f:
+        try:
+            with open(self.__file_path, "r") as f:
                 objdict = json.load(f)
                 for k, v in objdict.items():
-                    c_name = k.split('.')[1]
-                    if c_name == 'BaseModel':
-                        inst = BaseModel(**v)
-                        self.__objects[k] = inst
+                    cls_name = v['__class__']
+                    cls_ex = globals().get(cls_name)
+                    if cls_ex:
+                        self.new(cls_ex(**v))
+        except FileNotFoundError:
+            return
