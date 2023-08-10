@@ -12,11 +12,9 @@ class FileStorage:
         return self.__objects
 
     def new(self, obj):
-        self.__objects[obj.__class__.__name__ + '.' + str(obj)] = obj
+        self.__objects[obj.__class__.__name__ + '.' + obj.id] = obj
 
     def save(self):
-        print("=====================")
-        print(self.__file_path)
         with open(self.__file_path, "w") as f:
             json.dump({k: v.to_dict() for k, v in self.__objects.items()}, f)
 
