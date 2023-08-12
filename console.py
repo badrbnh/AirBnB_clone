@@ -149,23 +149,24 @@ Ex: $ destroy BaseModel 1234-1234-1234."""
         Display string representations of all instances of a given class.
         If no class is specified, displays all instantiated objects."""
         args = line.split()
-        if not args:
-            print(f"** class doesn't exist **")
-            return
-        class_name = args[0]
-        try:
-            class_ = globals()[class_name]
-        except Exception:
-            print(f"** class doesn't exist **")
-            return
+
+        if len(args) > 0:
+            class_name = args[0]
+            try:
+                class_ = globals()[class_name]
+            except KeyError:
+                print("** class doesn't exist **")
+                return
         else:
-            objl = []
-            for obj in storage.all().values():
-                if len(args) > 0 and args[0] == obj.__class__.__name__:
-                    objl.append(obj.__str__())
-                elif len(args) == 0:
-                    objl.append(obj.__str__())
-            print(objl)
+            class_name = None
+
+        objl = []
+
+        for obj in storage.all().values():
+            if class_name is None or isinstance(obj, class_):
+                objl.append(obj.__str__())
+
+        print(objl)
 
     def do_update(self, line):
         """Updates an instance based on the class name and id

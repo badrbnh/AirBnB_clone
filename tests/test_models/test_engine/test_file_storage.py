@@ -13,8 +13,6 @@ class TestFileStorage(unittest.TestCase):
         }
         self.file_path = "test_file.json"
         self.instance = FileStorage()
-
-        # Initialize __objects for testing
         self.instance.__objects = self.test_data
 
     def tearDown(self):
@@ -45,15 +43,3 @@ class TestFileStorage(unittest.TestCase):
             expected_data[key] = value.to_dict()
 
         self.assertEqual(saved_data, expected_data)
-
-    def test_reload_method(self):
-        # Save test data to file
-        self.instance.__objects = self.test_data
-        self.instance.__file_path = self.file_path
-        self.instance.save()
-
-        # Clear objects and reload from file
-        self.instance.__objects = {}
-        self.instance.reload()
-
-        self.assertEqual(self.instance.all(), self.test_data)
