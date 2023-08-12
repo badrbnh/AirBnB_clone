@@ -18,31 +18,34 @@ import re
 from shlex import split
 
 
-def parsing(arg):
-    brack = re.search(r"\[(.*?)\]", arg)
-    c_braces = re.search(r"\{(.*?)\}", arg)
-
-    if c_braces is None:
-        if brack is None:
-            return [i.strip(",") for i in split(arg)]
-        else:
-            lex = split(arg[: brack.span()[0]])
-            reslist = [i.strip(",") for i in lex]
-            reslist.append(brack.group())
-            return reslist
-    else:
-        lex = split(arg[: c_braces.span()[0]])
-        reslist = [i.strip(",") for i in lex]
-        reslist.append(c_braces.group())
-        return reslist
-
-
 class HBNBCommand(cmd.Cmd):
     """
     The command interpreter class for the AirBnB clone project.
     """
 
     prompt = "(hbnb) "
+
+    def parser(arg):
+        """
+        Method that splits the arguments of the user input without
+        brackets, parentheses, commas...
+        """
+        brack = re.search(r"\[(.*?)/]", arg)
+        c_braces = re.search(r"\{(.*?\}", arg)
+
+        if c_braces is None:
+            if brack is None:
+                return [i.strip(",") for i in split(arg)]
+            else:
+                lex = split(arg[: brack.span()[0]])
+                reslist = [i.strip(",") for i in lex]
+                reslist.append(brack.group())
+                return reslist
+        else:
+            lex = split(arg[: c_braces.span()[0]])
+            reslist = [i.strip(",") for i in lex]
+            reslist.append(c_braces.group())
+            return reslist
 
     def do_quit(self, line):
         """Quit command to exit the program"""
@@ -61,7 +64,7 @@ class HBNBCommand(cmd.Cmd):
         """Creates a new instance of BaseModel,
 saves it (to the JSON file) and prints the id.
 Ex: $ create BaseModel"""
-        args = parsing(line)
+        args = line.split()
         if not args:
             print("** class name missing **")
             return
@@ -79,7 +82,7 @@ Ex: $ create BaseModel"""
 an instance based on the class name and id.
 Ex: $ show BaseModel 1234-1234-1234
         """
-        args = parsing(line)
+        args = line.split()
         if not args:
             print("** class name missing **")
             return
@@ -107,7 +110,7 @@ Ex: $ show BaseModel 1234-1234-1234
         """Deletes an instance based on
 the class name and id (save the change into the JSON file).
 Ex: $ destroy BaseModel 1234-1234-1234."""
-        args = parsing(line)
+        args = line.split()
         if not args:
             print("** class name missing **")
             return
@@ -139,7 +142,7 @@ Ex: $ destroy BaseModel 1234-1234-1234."""
         """ Prints all string representation of
 all instances based or not on the class name.
 Ex: $ all BaseModel or $ all"""
-        args = parsing(line)
+        args = line.split()
         if not args:
             print(f"** class doesn't exist **")
             return
@@ -158,7 +161,7 @@ Ex: $ all BaseModel or $ all"""
         """Updates an instance based on the class name and id
 by adding or updating attribute (save the change into the JSON file).
 Ex: $ update BaseModel 1234-1234-1234 email "aibnb@mail.com"."""
-        args = parsing(line)
+        args = line.split()
         if not args:
             print("** class name missing **")
             return
@@ -179,7 +182,7 @@ Ex: $ update BaseModel 1234-1234-1234 email "aibnb@mail.com"."""
             if len(args) > 2:
                 if len(args) > 3:
                     attr_name = args[2]
-                    atte_value = ''.join(args[3]).strip('"')
+                    atte_value = ''.join(args[3]).strip('""')
                     setattr(obj, attr_name, atte_value)
                     obj.save()
                 else:
@@ -194,9 +197,4 @@ Ex: $ update BaseModel 1234-1234-1234 email "aibnb@mail.com"."""
 
 
 if __name__ == '__main__':
-    """
-    This block of code is executed only when the script is run directly,
-    not when it's imported as a module.
-    Creates an instance of HBNBCommand and starts the command loop.
-    """
     HBNBCommand().cmdloop()
