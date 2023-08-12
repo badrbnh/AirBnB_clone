@@ -179,7 +179,7 @@ Ex: $ update BaseModel 1234-1234-1234 email "aibnb@mail.com"."""
             if len(args) > 2:
                 if len(args) > 3:
                     attr_name = args[2]
-                    atte_value = ''.join(args[3]).strip('""')
+                    atte_value = ''.join(args[3]).strip('"')
                     setattr(obj, attr_name, atte_value)
                     obj.save()
                 else:
