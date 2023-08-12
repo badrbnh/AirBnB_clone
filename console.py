@@ -72,6 +72,53 @@ class HBNBCommand(cmd.Cmd):
             new_inst.save()
             print(new_inst.id)
 
+    def do_show(self, args):
+        args_tokens = parsing(args)
+        all_objects = storage.all()
+
+        if not args_tokens:
+            print("** class name missing **")
+        elif args_tokens[0] not in HBNBCommand._classes:
+            print("** class doesn't exist **")
+        elif len(args_tokens) < 2:
+            print("** instance id missing **")
+        else:
+            instance_key = "{}.{}".format(args_tokens[0], args_tokens[1])
+            if instance_key in all_objects:
+                print(all_objects[instance_key])
+            else:
+                print("** no instance found **")
+
+    def do_destory(self, args):
+        arg_list = parsing(args)
+        all_objects = storage.all()
+        if not arg_list:
+            print("** class name missing **")
+        elif arg_list[0] not in HBNBCommand._classes:
+            print("** class doesn't exist **")
+        elif len(arg_list) < 2:
+            print("** instance id missing **")
+        else:
+            instance_key = "{}.{}".format(arg_list[0], arg_list[1])
+            if instance_key in all_objects:
+                del all_objects[instance_key]
+                storage.save()
+            else:
+                print("** no instance found **")
+
+    def do_all(self, args):
+        arg_list = parsing(args)
+        if len(arg_list) > 0 and arg_list[0] not in HBNBCommand._classes:
+            print("** class doesn't exist **")
+        else:
+            obj = []
+            for o in storage.all().values():
+                if len(arg_list) > 0 and arg_list[0] == o.__class__.__name__:
+                    obj.append(o.__str__())
+                elif len(arg_list) == 0:
+                    obj.append(o.__str__())
+            print(obj)
+
 
 if __name__ == "__main__":
     """
