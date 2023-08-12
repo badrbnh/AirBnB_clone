@@ -17,6 +17,7 @@ import cmd
 import re
 from shlex import split
 
+
 def parsing(arg):
     brack = re.search(r"\[(.*?)\]", arg)
     c_braces = re.search(r"\{(.*?)\}", arg)
@@ -34,6 +35,7 @@ def parsing(arg):
         reslist = [i.strip(",") for i in lex]
         reslist.append(c_braces.group())
         return reslist
+
 
 class HBNBCommand(cmd.Cmd):
     """
