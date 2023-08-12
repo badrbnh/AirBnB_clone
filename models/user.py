@@ -1,6 +1,12 @@
 #!/usr/bin/python3
+"""
+This module defines the User class, which inherits from BaseModel.
+
+User class represents a user in the AirBnB clone project.
+"""
 
 from models.base_model import BaseModel
+
 
 class User(BaseModel):
     """
@@ -10,4 +16,4 @@ class User(BaseModel):
     email = ""
     password = ""
     first_name = ""
-    last_name =  ""
+    last_name = ""
