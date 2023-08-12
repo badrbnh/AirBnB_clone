@@ -141,13 +141,12 @@ all instances based or not on the class name.
 Ex: $ all BaseModel or $ all"""
         args = parsing(line)
         if not args:
-            print("** class name missing **")
+            print(f"** class doesn't exist **")
             return
-
         class_name = args[0]
         try:
             class_ = globals()[class_name]
-        except KeyError:
+        except Exception:
             print(f"** class doesn't exist **")
             return
         instances = storage.all().values()
