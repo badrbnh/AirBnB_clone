@@ -1,4 +1,37 @@
 #!/usr/bin/python3
+"""
+FileStorage Module
+
+This module manages the serialization and deserialization
+of objects to and from JSON files.
+
+Classes:
+- FileStorage: Manages the storage and
+retrieval of instances to/from JSON files.
+
+Attributes:
+- __file_path (str): The path to the JSON file.
+- __objects (dict): A dictionary to store instances by their class name and ID.
+
+Methods:
+- all(self): Returns the dictionary of stored objects.
+- new(self, obj): Adds an object to the storage.
+- save(self): Serializes the objects and saves to the JSON file.
+- reload(self): Deserializes the JSON file and loads objects.
+
+Usage:
+from models.engine.file_storage import FileStorage
+
+# Instantiate FileStorage
+storage = FileStorage()
+
+# Load existing object data from the JSON file
+storage.reload()
+
+# Perform operations on instances (create, update, delete)
+# Call storage.save() after each operation to persist changes
+
+"""
 import json
 from models.base_model import BaseModel
 import os
@@ -39,7 +72,7 @@ class FileStorage:
 
         for key, obj in FileStorage.__objects.items():
             data[key] = obj.to_dict()
-        with open(FileStorage.__file_path, "w") as file:          
+        with open(FileStorage.__file_path, "w") as file:
             json.dump(data, file, indent=4)
 
     def reload(self):
@@ -48,7 +81,8 @@ class FileStorage:
         """
         if os.path.exists(self.__file_path):
             try:
-                with open(self.__file_path, "r", encoding="utf-8") as data_file:
+                with open(self.__file_path, "r",
+                          encoding="utf-8") as data_file:
                     json_data = json.load(data_file)
                     for key, value in json_data.items():
                         if '.' in key:

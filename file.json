@@ -3,7 +3,14 @@
         "__class__": "BaseModel",
         "id": "8e8494f3-7d9a-40f5-a8a4-05905b0b103e",
         "created_at": "2023-08-11T19:47:27.039914",
-        "updated_at": "2023-08-12T15:01:02.157879",
+        "updated_at": "2023-08-12T15:29:49.831535",
+        "name": "badr"
+    },
+    "BaseModel.bb6552d8-2cb7-4b80-b282-5bc2cf3a5bd4": {
+        "__class__": "BaseModel",
+        "id": "bb6552d8-2cb7-4b80-b282-5bc2cf3a5bd4",
+        "created_at": "2023-08-12T15:29:12.750664",
+        "updated_at": "2023-08-12T15:30:21.534971",
         "name": "badr"
     }
 }

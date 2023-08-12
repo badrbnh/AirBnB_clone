@@ -1,4 +1,16 @@
 #!/usr/bin/python3
+"""
+console.py
+
+This module contains the entry point of
+the command interpreter for the AirBnB clone project.
+The HBNBCommand class defines the command interpreter,
+which allows users to interact with the project's objects.
+
+Usage:
+python3 console.py
+
+"""
 from models.base_model import BaseModel
 from models import storage
 import cmd
@@ -7,9 +19,17 @@ from shlex import split
 
 
 class HBNBCommand(cmd.Cmd):
+    """
+    The command interpreter class for the AirBnB clone project.
+    """
+
     prompt = "(hbnb) "
 
     def parser(arg):
+        """
+        Method that splits the arguments of the user input without
+        brackets, parentheses, commas...
+        """
         brack = re.search(r"\[(.*?)/]", arg)
         c_braces = re.search(r"\{(.*?\}", arg)
 
