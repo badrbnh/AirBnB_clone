@@ -13,7 +13,6 @@ from shlex import split
 from models.user import User
 
 
-
 def parse(arg):
     curly_braces = re.search(r"\{(.*?)\}", arg)
     brackets = re.search(r"\[(.*?)\]", arg)
