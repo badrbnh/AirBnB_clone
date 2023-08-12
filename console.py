@@ -170,21 +170,30 @@ Ex: $ destroy BaseModel 1234-1234-1234."""
         except Exception:
             pass
 
-    def do_all(self, arg):
-            """Usage: all or all <class> or <class>.all()
-            Display string representations of all instances of a given class.
-            If no class is specified, displays all instantiated objects."""
-            argl = parse(arg)
-            if len(argl) > 0 and argl[0] not in HBNBCommand.__classes:
+    def do_all(self, line):
+        """Usage: all or all <class> or <class>.all()
+        Display string representations of all instances of a given class.
+        If no class is specified, displays all instantiated objects."""
+        args = line.split()
+
+        if len(args) > 0:
+            class_name = args[0]
+            try:
+                class_ = globals()[class_name]
+            except KeyError:
                 print("** class doesn't exist **")
-            else:
-                objl = []
-                for obj in storage.all().values():
-                    if len(argl) > 0 and argl[0] == obj.__class__.__name__:
-                        objl.append(obj.__str__())
-                    elif len(argl) == 0:
-                        objl.append(obj.__str__())
-                print(objl)
+                return
+        else:
+            class_name = None
+
+        objl = []
+
+        for obj in storage.all().values():
+            if class_name is None or isinstance(obj, class_):
+                objl.append(obj.__str__())
+
+        print(objl)
+
 
     def do_update(self, line):
         """Updates an instance based on the class name and id
