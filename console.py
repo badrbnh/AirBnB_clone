@@ -23,6 +23,7 @@ from models import storage
 from shlex import split
 from models.user import User
 
+
 def parse(arg):
     curly_braces = re.search(r"\{(.*?)\}", arg)
     brackets = re.search(r"\[(.*?)\]", arg)
@@ -47,15 +48,6 @@ class HBNBCommand(cmd.Cmd):
     """
 
     prompt = "(hbnb) "
-    __classes = {
-        "BaseModel",
-        "User",
-        "State",
-        "Review",
-        "Amenity",
-        "Place",
-        "City"
-    }
 
     def parser(arg):
         """
@@ -193,7 +185,6 @@ Ex: $ destroy BaseModel 1234-1234-1234."""
                 objl.append(obj.__str__())
 
         print(objl)
-
 
     def do_update(self, line):
         """Updates an instance based on the class name and id
