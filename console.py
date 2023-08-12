@@ -1,11 +1,17 @@
 #!/usr/bin/python3
 """Defines the HBnB console."""
-import cmd
-import re
-from shlex import split
-from models import storage
+from models.amenity import Amenity
 from models.base_model import BaseModel
+from models.city import City
+import cmd
+from models.place import Place
+from models.review import Review
+import re
+from models.state import State
+from models import storage
+from shlex import split
 from models.user import User
+
 
 
 def parse(arg):
