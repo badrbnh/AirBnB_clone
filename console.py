@@ -41,6 +41,11 @@ class HBNBCommand(cmd.Cmd):
     __classes = {
         "BaseModel",
         "User",
+        "State",
+        "Review",
+        "Amenity",
+        "Place",
+        "City"
     }
 
     def emptyline(self):
