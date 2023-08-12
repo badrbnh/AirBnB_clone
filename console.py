@@ -17,6 +17,23 @@ import cmd
 import re
 from shlex import split
 
+def parsing(arg):
+    brack = re.search(r"\[(.*?)\]", arg)
+    c_braces = re.search(r"\{(.*?)\}", arg)
+
+    if c_braces is None:
+        if brack is None:
+            return [i.strip(",") for i in split(arg)]
+        else:
+            lex = split(arg[: brack.span()[0]])
+            reslist = [i.strip(",") for i in lex]
+            reslist.append(brack.group())
+            return reslist
+    else:
+        lex = split(arg[: c_braces.span()[0]])
+        reslist = [i.strip(",") for i in lex]
+        reslist.append(c_braces.group())
+        return reslist
 
 class HBNBCommand(cmd.Cmd):
     """
@@ -24,28 +41,6 @@ class HBNBCommand(cmd.Cmd):
     """
 
     prompt = "(hbnb) "
-
-    def parser(arg):
-        """
-        Method that splits the arguments of the user input without
-        brackets, parentheses, commas...
-        """
-        brack = re.search(r"\[(.*?)/]", arg)
-        c_braces = re.search(r"\{(.*?\}", arg)
-
-        if c_braces is None:
-            if brack is None:
-                return [i.strip(",") for i in split(arg)]
-            else:
-                lex = split(arg[: brack.span()[0]])
-                reslist = [i.strip(",") for i in lex]
-                reslist.append(brack.group())
-                return reslist
-        else:
-            lex = split(arg[: c_braces.span()[0]])
-            reslist = [i.strip(",") for i in lex]
-            reslist.append(c_braces.group())
-            return reslist
 
     def do_quit(self, line):
         """Quit command to exit the program"""
@@ -64,7 +59,7 @@ class HBNBCommand(cmd.Cmd):
         """Creates a new instance of BaseModel,
 saves it (to the JSON file) and prints the id.
 Ex: $ create BaseModel"""
-        args = line.split()
+        args = parsing(line)
         if not args:
             print("** class name missing **")
             return
@@ -82,7 +77,7 @@ Ex: $ create BaseModel"""
 an instance based on the class name and id.
 Ex: $ show BaseModel 1234-1234-1234
         """
-        args = line.split()
+        args = parsing(line)
         if not args:
             print("** class name missing **")
             return
@@ -110,7 +105,7 @@ Ex: $ show BaseModel 1234-1234-1234
         """Deletes an instance based on
 the class name and id (save the change into the JSON file).
 Ex: $ destroy BaseModel 1234-1234-1234."""
-        args = line.split()
+        args = parsing(line)
         if not args:
             print("** class name missing **")
             return
@@ -142,7 +137,7 @@ Ex: $ destroy BaseModel 1234-1234-1234."""
         """ Prints all string representation of
 all instances based or not on the class name.
 Ex: $ all BaseModel or $ all"""
-        args = line.split()
+        args = parsing(line)
         if not args:
             print("** class name missing **")
             return
@@ -162,7 +157,7 @@ Ex: $ all BaseModel or $ all"""
         """Updates an instance based on the class name and id
 by adding or updating attribute (save the change into the JSON file).
 Ex: $ update BaseModel 1234-1234-1234 email "aibnb@mail.com"."""
-        args = line.split()
+        args = parsing(line)
         if not args:
             print("** class name missing **")
             return
