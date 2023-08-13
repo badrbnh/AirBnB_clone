@@ -31,12 +31,12 @@ def parse(arg):
         if brackets is None:
             return [i.strip(",") for i in split(arg)]
         else:
-            lexer = split(arg[:brackets.span()[0]])
+            lexer = split(arg[: brackets.span()[0]])
             retl = [i.strip(",") for i in lexer]
             retl.append(brackets.group())
             return retl
     else:
-        lexer = split(arg[:curly_braces.span()[0]])
+        lexer = split(arg[: curly_braces.span()[0]])
         retl = [i.strip(",") for i in lexer]
         retl.append(curly_braces.group())
         return retl
@@ -48,28 +48,6 @@ class HBNBCommand(cmd.Cmd):
     """
 
     prompt = "(hbnb) "
-
-    def parser(arg):
-        """
-        Method that splits the arguments of the user input without
-        brackets, parentheses, commas...
-        """
-        brack = re.search(r"\[(.*?)/]", arg)
-        c_braces = re.search(r"\{(.*?\}", arg)
-
-        if c_braces is None:
-            if brack is None:
-                return [i.strip(",") for i in split(arg)]
-            else:
-                lex = split(arg[: brack.span()[0]])
-                reslist = [i.strip(",") for i in lex]
-                reslist.append(brack.group())
-                return reslist
-        else:
-            lex = split(arg[: c_braces.span()[0]])
-            reslist = [i.strip(",") for i in lex]
-            reslist.append(c_braces.group())
-            return reslist
 
     def do_quit(self, line):
         """Quit command to exit the program"""
@@ -86,8 +64,8 @@ class HBNBCommand(cmd.Cmd):
 
     def do_create(self, line):
         """Creates a new instance of BaseModel,
-saves it (to the JSON file) and prints the id.
-Ex: $ create BaseModel"""
+        saves it (to the JSON file) and prints the id.
+        Ex: $ create BaseModel"""
         args = line.split()
         if not args:
             print("** class name missing **")
@@ -103,8 +81,8 @@ Ex: $ create BaseModel"""
 
     def do_show(self, line):
         """Prints the string representation of
-an instance based on the class name and id.
-Ex: $ show BaseModel 1234-1234-1234
+        an instance based on the class name and id.
+        Ex: $ show BaseModel 1234-1234-1234
         """
         args = line.split()
         if not args:
@@ -132,8 +110,8 @@ Ex: $ show BaseModel 1234-1234-1234
 
     def do_destroy(self, line):
         """Deletes an instance based on
-the class name and id (save the change into the JSON file).
-Ex: $ destroy BaseModel 1234-1234-1234."""
+        the class name and id (save the change into the JSON file).
+        Ex: $ destroy BaseModel 1234-1234-1234."""
         args = line.split()
         if not args:
             print("** class name missing **")
@@ -166,7 +144,7 @@ Ex: $ destroy BaseModel 1234-1234-1234."""
         """Usage: all or all <class> or <class>.all()
         Display string representations of all instances of a given class.
         If no class is specified, displays all instantiated objects."""
-        args = line.split()
+        args = parse(line)
 
         if len(args) > 0:
             class_name = args[0]
@@ -186,10 +164,20 @@ Ex: $ destroy BaseModel 1234-1234-1234."""
 
         print(objl)
 
+    def do_count(self, line):
+        """Usage: count <class> or <class>.count()
+        Retrieve the number of instances of a given class."""
+        args = parse(args)
+        count = 0
+        for obj in storage.all().values():
+            if args[0] == obj.__class__.__name__:
+                count += 1
+        print(count)
+
     def do_update(self, line):
         """Updates an instance based on the class name and id
-by adding or updating attribute (save the change into the JSON file).
-Ex: $ update BaseModel 1234-1234-1234 email "aibnb@mail.com"."""
+        by adding or updating attribute (save the change into the JSON file).
+        Ex: $ update BaseModel 1234-1234-1234 email "aibnb@mail.com"."""
         args = line.split()
         if not args:
             print("** class name missing **")
@@ -211,7 +199,7 @@ Ex: $ update BaseModel 1234-1234-1234 email "aibnb@mail.com"."""
             if len(args) > 2:
                 if len(args) > 3:
                     attr_name = args[2]
-                    atte_value = ''.join(args[3]).strip('""')
+                    atte_value = "".join(args[3]).strip('""')
                     setattr(obj, attr_name, atte_value)
                     obj.save()
                 else:
@@ -225,5 +213,5 @@ Ex: $ update BaseModel 1234-1234-1234 email "aibnb@mail.com"."""
             return
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     HBNBCommand().cmdloop()
