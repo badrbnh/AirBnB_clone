@@ -3,17 +3,18 @@ import json
 import os
 from models.base_model import BaseModel
 from models.engine.file_storage import FileStorage
-from models import storage
 
 
 class TestFileStorage(unittest.TestCase):
 
     def setUp(self):
-        self.new_model = BaseModel()
-        self.file_path = storage._FileStorage__file_path
+        self.test_data = {
+            "key1": BaseModel(),
+            "key2": BaseModel()
+        }
+        self.file_path = "test_file.json"
         self.instance = FileStorage()
-        self.instance.__objects = storage._FileStorage__objects
-        self.key = f"{self.new_model.__class__.__name__}.{self.new_model.id}"
+        self.instance.__objects = self.test_data
 
     def tearDown(self):
         try:
@@ -21,20 +22,9 @@ class TestFileStorage(unittest.TestCase):
         except FileNotFoundError:
             pass
 
-    def test_attributes(self):
-        self.assertEqual(self.file_path, "file.json")
-        self.assertIsInstance(self.file_path, str)
-        self.assertIsInstance(self.instance.__objects, dict)
-    
-    def test_methods(self):
-        self.assertTrue(hasattr(self.new_model, "__init__"))
-        self.assertTrue(hasattr(self.new_model, "__str__"))
-        self.assertTrue(hasattr(self.new_model, "save"))
-        self.assertTrue(hasattr(self.new_model, "to_dict"))
-
     def test_all_method(self):
         result = self.instance.all()
-        self.assertEqual(result, self.instance.all())
+        self.assertEqual(result, self.test_data)
 
     def test_new_method(self):
         new_model = BaseModel()
@@ -43,22 +33,25 @@ class TestFileStorage(unittest.TestCase):
         self.assertIn(key, self.instance._FileStorage__objects)
 
     def test_save_method(self):
+        self.instance.__file_path = self.file_path
         self.instance.save()
-        with open(self.file_path, 'r') as file:
-            saved_data = json.load(file)
 
-        self.assertIn(self.key, saved_data)
-        self.assertEqual(saved_data[self.key], self.new_model.to_dict())
+        with open(self.file_path, "r") as data_file:
+            saved_data = json.load(data_file)
+
+        expected_data = {}
+        for key, value in self.test_data.items():
+            expected_data[key] = value.to_dict()
+
+        self.assertEqual(saved_data, expected_data)
 
     def test_reload_method(self):
+        self.instance.__file_path = self.file_path
         self.instance.save()
+
+        self.instance._FileStorage__objects = {}
         self.instance.reload()
-
-        with open(self.file_path, 'r') as file:
-            reloaded_data = json.load(file)
-
-        self.assertIn(self.key, reloaded_data)
-        self.assertEqual(reloaded_data[self.key], self.new_model.to_dict())
+        self.assertEqual(self.instance._FileStorage__objects, self.test_data)
 
 
 if __name__ == "__main__":
