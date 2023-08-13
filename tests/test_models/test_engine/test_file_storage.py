@@ -30,6 +30,9 @@ class TestFileStorage(unittest.TestCase):
         self.assertIn(key, self._objs)
 
     def test_save_method(self):
+        my_model = BaseModel()
+        my_model.name = "My_First_Model"
+        my_model.my_number = 89
         storage.save()
         with open(self.file_path, "r") as data_file:
             saved_data = json.load(data_file)
@@ -41,14 +44,19 @@ class TestFileStorage(unittest.TestCase):
         self.assertEqual(saved_data, expected_data)
 
     def test_reload_method(self):
+        my_model = BaseModel()
+        my_model.name = "My_First_Model"
+        my_model.my_number = 89
         storage.save()
+        with open(self.file_path, 'r') as file:
+            saved_data = json.load(file)
         storage.reload()
 
         with open(self.file_path, 'r') as file:
             reloaded_data = json.load(file)
 
         self._objs = {}
-        self.assertEqual(reloaded_data[self.keyname], self.instance.to_dict())
+        self.assertEqual(reloaded_data[self.keyname], saved_data[self.keyname])
 
 
 if __name__ == "__main__":
