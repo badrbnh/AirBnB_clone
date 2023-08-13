@@ -1,11 +1,11 @@
 #!/usr/bin/python3
 """Unittest for the FileStorage class"""
-import unittest
-import json
-import os
 from models.base_model import BaseModel
 from models.engine.file_storage import FileStorage
+import json
+import os
 from models import storage
+import unittest
 
 
 class TestFileStorage(unittest.TestCase):
@@ -75,6 +75,7 @@ class TestFileStorage(unittest.TestCase):
         self.assertEqual(reloaded_data[self.keyname], saved_data[self.keyname])
 
     def test_path(self):
+        """Test the existance of the json file"""
         if os.path.exists(self.file_path):
             os.remove(self.file_path)
         self.assertFalse(os.path.exists(self.file_path))
