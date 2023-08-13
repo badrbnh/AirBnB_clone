@@ -25,6 +25,13 @@ class TestFileStorage(unittest.TestCase):
         except FileNotFoundError:
             pass
 
+    def test_methods(self):
+        obj = FileStorage
+        self.assertTrue(hasattr(obj, "all"))
+        self.assertTrue(hasattr(obj, "new"))
+        self.assertTrue(hasattr(obj, "save"))
+        self.assertTrue(hasattr(obj, "reload"))
+
     def test_all_method(self):
         """Test the all() method"""
         result = storage.all()
@@ -66,6 +73,13 @@ class TestFileStorage(unittest.TestCase):
 
         self._objs = {}
         self.assertEqual(reloaded_data[self.keyname], saved_data[self.keyname])
+
+    def test_path(self):
+        if os.path.exists(self.file_path):
+            os.remove(self.file_path)
+        self.assertFalse(os.path.exists(self.file_path))
+        storage.reload()
+
 
 if __name__ == "__main__":
     unittest.main()

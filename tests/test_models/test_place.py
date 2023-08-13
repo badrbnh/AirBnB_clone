@@ -6,6 +6,7 @@ from models.amenity import Amenity
 from models.city import City
 from models.user import User
 
+
 class TestAmenity(unittest.TestCase):
 
     def setUp(self):
