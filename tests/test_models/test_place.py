@@ -44,7 +44,8 @@ class TestAmenity(unittest.TestCase):
         self.assertEqual(self.new_user.price_by_night, 300)
         self.assertEqual(self.new_user.latitude, 9.145)
         self.assertEqual(self.new_user.longitude, 25.54)
-        self.assertEqual(self.new_user.amenity_ids, ["353565", "f536zf4", "4daz53"])
+        self.assertEqual(self.new_user.amenity_ids,
+                         ["353565", "f536zf4", "4daz53"])
 
 
 if __name__ == '__main__':
