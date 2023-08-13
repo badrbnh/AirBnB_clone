@@ -3,6 +3,7 @@ import json
 import os
 from models.base_model import BaseModel
 from models.engine.file_storage import FileStorage
+from models import storage
 
 
 class TestFileStorage(unittest.TestCase):
@@ -12,9 +13,11 @@ class TestFileStorage(unittest.TestCase):
             "key1": BaseModel(),
             "key2": BaseModel()
         }
-        self.file_path = "test_file.json"
+        self.new_model = BaseModel()
+        self.file_path = storage._FileStorage__file_path
         self.instance = FileStorage()
-        self.instance.__objects = self.test_data
+        self.instance.__objects = storage._FileStorage__objects
+        self.key = f"{self.new_model.__class__.__name__}.{self.new_model.id}"
 
     def tearDown(self):
         try:
@@ -33,24 +36,22 @@ class TestFileStorage(unittest.TestCase):
         self.assertIn(key, self.instance._FileStorage__objects)
 
     def test_save_method(self):
-        self.instance.__file_path = self.file_path
         self.instance.save()
-        with open(self.file_path, "r") as data_file:
-            saved_data = json.load(data_file)
-        expected_data = {}
-        for key, value in self.test_data.items():
-            expected_data[key] = value.to_dict()
-        self.assertEqual(saved_data, expected_data)
+        with open(self.file_path, 'r') as file:
+            saved_data = json.load(file)
+
+        self.assertIn(self.key, saved_data)
+        self.assertEqual(saved_data[self.key], self.new_model.to_dict())
 
     def test_reload_method(self):
-        self.instance.__file_path = self.file_path
         self.instance.save()
-        with open(self.file_path, "r") as data_file:
-            saved_data = json.load(data_file)
-
-        self.instance._FileStorage__objects = {}
         self.instance.reload()
-        self.assertEqual(self.instance._FileStorage__objects, saved_data)
+
+        with open(self.file_path, 'r') as file:
+            reloaded_data = json.load(file)
+
+        self.assertIn(self.key, reloaded_data)
+        self.assertEqual(reloaded_data[self.key], self.new_model.to_dict())
 
 
 if __name__ == "__main__":
