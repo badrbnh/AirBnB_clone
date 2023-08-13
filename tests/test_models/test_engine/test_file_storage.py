@@ -1,11 +1,11 @@
 #!/usr/bin/python3
 """Unittest for the FileStorage class"""
-from models.base_model import BaseModel
-from models.engine.file_storage import FileStorage
+import unittest
 import json
 import os
+from models.base_model import BaseModel
+from models.engine.file_storage import FileStorage
 from models import storage
-import unittest
 
 
 class TestFileStorage(unittest.TestCase):
@@ -13,13 +13,15 @@ class TestFileStorage(unittest.TestCase):
 
     def setUp(self):
         """Setting up the test cases"""
+        super().setUp()  # Call the superclass method
         self.file_path = storage._FileStorage__file_path
         self.instance = BaseModel()
         self._objs = storage._FileStorage__objects
-        self.keyname = "BaseModel."+self.instance.id
+        self.keyname = "BaseModel." + self.instance.id
 
     def tearDown(self):
         """Cleaning the file path"""
+        super().tearDown()  # Call the superclass method
         try:
             os.remove(self.file_path)
         except FileNotFoundError:
@@ -38,7 +40,7 @@ class TestFileStorage(unittest.TestCase):
         self.assertEqual(result, self._objs)
 
     def test_new_method(self):
-        """Test the new()) method"""
+        """Test the new() method"""
         storage.new(self.instance)
         key = f"{self.instance.__class__.__name__}.{self.instance.id}"
         self.assertIn(key, self._objs)
@@ -48,6 +50,7 @@ class TestFileStorage(unittest.TestCase):
         my_model = BaseModel()
         my_model.name = "My_First_Model"
         my_model.my_number = 89
+        storage.new(my_model)
         storage.save()
         with open(self.file_path, "r") as data_file:
             saved_data = json.load(data_file)
@@ -59,10 +62,11 @@ class TestFileStorage(unittest.TestCase):
         self.assertEqual(saved_data, expected_data)
 
     def test_reload_method(self):
-        """save the reload() method"""
+        """Test the reload() method"""
         my_model = BaseModel()
         my_model.name = "My_First_Model"
         my_model.my_number = 89
+        storage.new(my_model)
         storage.save()
         with open(self.file_path, 'r') as file:
             saved_data = json.load(file)
@@ -75,7 +79,7 @@ class TestFileStorage(unittest.TestCase):
         self.assertEqual(reloaded_data[self.keyname], saved_data[self.keyname])
 
     def test_path(self):
-        """Test the existance of the json file"""
+        """Test the existence of the JSON file"""
         if os.path.exists(self.file_path):
             os.remove(self.file_path)
         self.assertFalse(os.path.exists(self.file_path))
