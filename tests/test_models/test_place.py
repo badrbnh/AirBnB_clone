@@ -22,11 +22,12 @@ class TestAmenity(unittest.TestCase):
         self.assertEqual(self.new_user.user_id, "")
         self.assertEqual(self.new_user.description, "")
         self.assertEqual(self.new_user.name, "")
-        self.assertEqual(self.new_user.number_rooms, int)
-        self.assertEqual(self.new_user.number_bathrooms, int)
-        self.assertEqual(self.new_user.max_guest, int)
-        self.assertEqual(self.new_user.price_by_night, int)
-        self.assertEqual(self.new_user.latitude, float)
+        self.assertEqual(self.new_user.number_rooms, 0)
+        self.assertEqual(self.new_user.number_bathrooms, 0)
+        self.assertEqual(self.new_user.max_guest, 0)
+        self.assertEqual(self.new_user.price_by_night, 0)
+        self.assertEqual(self.new_user.longitude, 0.0)
+        self.assertEqual(self.new_user.latitude, 0.0)
         self.assertEqual(self.new_user.amenity_ids, [])
 
     def test_user_attribute(self):

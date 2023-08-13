@@ -66,6 +66,34 @@ class TestFileStorage(unittest.TestCase):
 
         self.assertEqual(reloaded_data[self.keyname], saved_data[self.keyname])
 
+    def test_delete_method(self):
+        my_model = BaseModel()
+        my_model.name = "Delete_Test_Model"
+        storage.new(my_model)
+        key_to_delete = f"{my_model.__class__.__name__}.{my_model.id}"
+        storage.delete(my_model)
+        self.assertNotIn(key_to_delete, storage._FileStorage__objects)
+
+    def test_get_method(self):
+        my_model = BaseModel()
+        my_model.name = "Get_Test_Model"
+        storage.new(my_model)
+        key_to_get = f"{my_model.__class__.__name__}.{my_model.id}"
+        retrieved_model = storage.get(BaseModel, my_model.id)
+        self.assertEqual(retrieved_model, my_model)
+
+    def test_count_method(self):
+        initial_count = len(storage.all())
+        my_model = BaseModel()
+        storage.new(my_model)
+        new_count = storage.count()
+        self.assertEqual(new_count, initial_count + 1)
+
+
+if __name__ == "__main__":
+    unittest.main()
+
+
 
 if __name__ == "__main__":
     unittest.main()
