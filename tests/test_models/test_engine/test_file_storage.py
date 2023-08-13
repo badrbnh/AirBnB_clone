@@ -21,6 +21,17 @@ class TestFileStorage(unittest.TestCase):
         except FileNotFoundError:
             pass
 
+    def test_attributes(self):
+        self.assertEqual(self.file_path, "file.json")
+        self.assertIsInstance(self.file_path, str)
+        self.assertIsInstance(self.instance.__objects, dict)
+    
+    def test_methods(self):
+        self.assertTrue(hasattr(self.new_model, "__init__"))
+        self.assertTrue(hasattr(self.new_model, "__str__"))
+        self.assertTrue(hasattr(self.new_model, "save"))
+        self.assertTrue(hasattr(self.new_model, "to_dict"))
+
     def test_all_method(self):
         result = self.instance.all()
         self.assertEqual(result, self.instance.all())
