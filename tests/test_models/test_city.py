@@ -18,7 +18,7 @@ class TestAmenity(unittest.TestCase):
 
     def test_user_attribute(self):
         self.new_user.name = "Root"
-        self.new_user.name = "h35df"
+        self.new_user.state_id = "h35df"
 
         self.assertEqual(self.new_user.name, "Root")
         self.assertEqual(self.new_user.state_id, "h35df")
