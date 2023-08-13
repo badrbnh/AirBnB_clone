@@ -9,10 +9,6 @@ from models import storage
 class TestFileStorage(unittest.TestCase):
 
     def setUp(self):
-        self.test_data = {
-            "key1": BaseModel(),
-            "key2": BaseModel()
-        }
         self.new_model = BaseModel()
         self.file_path = storage._FileStorage__file_path
         self.instance = FileStorage()
