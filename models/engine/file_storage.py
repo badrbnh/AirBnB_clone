@@ -1,13 +1,47 @@
 #!/usr/bin/python3
-"""Defines the FileStorage class."""
-import json
-from models.base_model import BaseModel
-from models.user import User
-from models.state import State
-from models.city import City
-from models.place import Place
+
+"""
+FileStorage Module
+
+This module manages the serialization and deserialization
+of objects to and from JSON files.
+
+Classes:
+- FileStorage: Manages the storage and
+retrieval of instances to/from JSON files.
+
+Attributes:
+- __file_path (str): The path to the JSON file.
+- __objects (dict): A dictionary to store instances by their class name and ID.
+
+Methods:
+- all(self): Returns the dictionary of stored objects.
+- new(self, obj): Adds an object to the storage.
+- save(self): Serializes the objects and saves to the JSON file.
+- reload(self): Deserializes the JSON file and loads objects.
+
+Usage:
+from models.engine.file_storage import FileStorage
+
+# Instantiate FileStorage
+storage = FileStorage()
+
+# Load existing object data from the JSON file
+storage.reload()
+
+# Perform operations on instances (create, update, delete)
+# Call storage.save() after each operation to persist changes
+
+"""
 from models.amenity import Amenity
+from models.base_model import BaseModel
+from models.city import City
+import json
+import os
+from models.place import Place
 from models.review import Review
+from models.state import State
+from models.user import User
 
 
 class FileStorage:
