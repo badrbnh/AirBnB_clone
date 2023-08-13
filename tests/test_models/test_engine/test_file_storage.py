@@ -13,7 +13,7 @@ class TestFileStorage(unittest.TestCase):
 
     def setUp(self):
         """Setting up the test cases"""
-        super().setUp()  # Call the superclass method
+        super().setUp()
         self.file_path = storage._FileStorage__file_path
         self.instance = BaseModel()
         self._objs = storage._FileStorage__objects
@@ -21,7 +21,7 @@ class TestFileStorage(unittest.TestCase):
 
     def tearDown(self):
         """Cleaning the file path"""
-        super().tearDown()  # Call the superclass method
+        super().tearDown()
         try:
             os.remove(self.file_path)
         except FileNotFoundError:
