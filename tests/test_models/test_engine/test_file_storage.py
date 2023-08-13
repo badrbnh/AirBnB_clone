@@ -1,90 +1,72 @@
 #!/usr/bin/python3
-"""Unittest for the FileStorage class"""
+"""
+Unit tests for the FileStorage class.
+"""
+
+
 import unittest
-import json
-import os
-from models.base_model import BaseModel
 from models.engine.file_storage import FileStorage
-from models import storage
+from models.base_model import BaseModel
+import os
+import json
 
 
 class TestFileStorage(unittest.TestCase):
-    """Test cases for all methods in the FileStorage class"""
+    """
+    Test cases for the FileStorage class.
+    """
 
     def setUp(self):
-        """Setting up the test cases"""
-        super().setUp()  # Call the superclass method
-        self.file_path = storage._FileStorage__file_path
-        self.instance = BaseModel()
-        self._objs = storage._FileStorage__objects
-        self.keyname = "BaseModel." + self.instance.id
+        """
+        Set up test environment.
+        """
+        self.storage = FileStorage()
+        self.obj = BaseModel()
 
-    def tearDown(self):
-        """Cleaning the file path"""
-        super().tearDown()  # Call the superclass method
-        try:
-            os.remove(self.file_path)
-        except FileNotFoundError:
-            pass
+    def test_all(self):
+        """
+        Test retrieval of all objects.
+        """
+        self.storage.new(self.obj)
+        self.storage.save()
 
-    def test_methods(self):
-        obj = FileStorage
-        self.assertTrue(hasattr(obj, "all"))
-        self.assertTrue(hasattr(obj, "new"))
-        self.assertTrue(hasattr(obj, "save"))
-        self.assertTrue(hasattr(obj, "reload"))
+        with open(self.storage._FileStorage__file_path) as f:
+            saved_data = json.load(f)
+            self.assertEqual(len(saved_data), 1)
+            self.assertIn(self.obj, saved_data.values())
 
-    def test_all_method(self):
-        """Test the all() method"""
-        result = storage.all()
-        self.assertEqual(result, self._objs)
+    def test_new(self):
+        """
+        Test adding a new object.
+        """
+        self.storage.new(self.obj)
+        self.assertIn(self.obj, self.storage.all().values())
 
-    def test_new_method(self):
-        """Test the new() method"""
-        storage.new(self.instance)
-        key = f"{self.instance.__class__.__name__}.{self.instance.id}"
-        self.assertIn(key, self._objs)
+    def test_save(self):
+        """
+        Test saving to a file.
+        """
+        self.storage.new(self.obj)
+        self.storage.save()
 
-    def test_save_method(self):
-        """Test the save() method"""
-        my_model = BaseModel()
-        my_model.name = "My_First_Model"
-        my_model.my_number = 89
-        storage.new(my_model)
-        storage.save()
-        with open(self.file_path, "r") as data_file:
-            saved_data = json.load(data_file)
+        with open(self.storage._FileStorage__file_path) as f:
+            saved_data = json.load(f)
+            self.assertIn(self.obj, saved_data.values())
 
-        expected_data = {}
-        for key, value in self._objs.items():
-            expected_data[key] = value.to_dict()
+    def test_reload(self):
+        """
+        Test reloading from a file.
+        """
+        self.storage.new(self.obj)
+        self.storage.save()
 
-        self.assertEqual(saved_data, expected_data)
+        storage2 = FileStorage()
+        storage2.reload()
 
-    def test_reload_method(self):
-        """Test the reload() method"""
-        my_model = BaseModel()
-        my_model.name = "My_First_Model"
-        my_model.my_number = 89
-        storage.new(my_model)
-        storage.save()
-        with open(self.file_path, 'r') as file:
-            saved_data = json.load(file)
-        storage.reload()
-
-        with open(self.file_path, 'r') as file:
-            reloaded_data = json.load(file)
-
-        self._objs = {}
-        self.assertEqual(reloaded_data[self.keyname], saved_data[self.keyname])
-
-    def test_path(self):
-        """Test the existence of the JSON file"""
-        if os.path.exists(self.file_path):
-            os.remove(self.file_path)
-        self.assertFalse(os.path.exists(self.file_path))
-        storage.reload()
+        with open(storage2._FileStorage__file_path) as f:
+            saved_data = json.load(f)
+            self.assertIn(self.obj, saved_data.values())
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     unittest.main()
