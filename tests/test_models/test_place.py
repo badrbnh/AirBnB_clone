@@ -16,6 +16,7 @@ class TestAmenity(unittest.TestCase):
         self.assertEqual(self.new_user.city_id, "")
         self.assertEqual(self.new_user.user_id, "")
         self.assertEqual(self.new_user.description, "")
+        self.assertEqual(self.new_user.name, "")
         self.assertEqual(self.new_user.number_rooms, int)
         self.assertEqual(self.new_user.number_bathrooms, int)
         self.assertEqual(self.new_user.max_guest, int)
@@ -26,6 +27,7 @@ class TestAmenity(unittest.TestCase):
     def test_user_attribute(self):
         self.new_user.city_id = "435feaf"
         self.new_user.user_id = "fez5fz"
+        self.new_user.name = "Betty"
         self.new_user.description = "Great Place"
         self.new_user.number_rooms = 6
         self.new_user.number_bathrooms = 4
@@ -38,6 +40,7 @@ class TestAmenity(unittest.TestCase):
         self.assertEqual(self.new_user.city_id, "435feaf")
         self.assertEqual(self.new_user.user_id, "fez5fz")
         self.assertEqual(self.new_user.description, "Great Place")
+        self.assertEqual(self.new_user.name, "Betty")
         self.assertEqual(self.new_user.number_rooms, 6)
         self.assertEqual(self.new_user.number_bathrooms, 4)
         self.assertEqual(self.new_user.max_guest, 6)
