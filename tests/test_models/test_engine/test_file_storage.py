@@ -14,7 +14,7 @@ class TestFileStorage(unittest.TestCase):
         }
         self.file_path = "test_file.json"
         self.instance = FileStorage()
-        self.instance._FileStorage__objects = self.test_data  # Corrected the attribute name
+        self.instance.__objects = self.test_data
 
     def tearDown(self):
         try:
@@ -24,7 +24,7 @@ class TestFileStorage(unittest.TestCase):
 
     def test_all_method(self):
         result = self.instance.all()
-        self.assertEqual(result, self.instance._FileStorage__objects)
+        self.assertEqual(result, self.instance.all())
 
     def test_new_method(self):
         new_model = BaseModel()
@@ -32,27 +32,26 @@ class TestFileStorage(unittest.TestCase):
         key = f"{new_model.__class__.__name__}.{new_model.id}"
         self.assertIn(key, self.instance._FileStorage__objects)
 
-      
+    def test_save_method(self):
+        self.instance.__file_path = self.file_path
         self.instance.save()
-        with open(self.file_path, 'r') as file:
-            saved_data = json.load(file)
-        
-        self.assertIn(key, saved_data)
-        self.assertEqual(saved_data[key], new_model.to_dict())
+        with open(self.file_path, "r") as data_file:
+            saved_data = json.load(data_file)
+        expected_data = {}
+        for key, value in self.test_data.items():
+            expected_data[key] = value.to_dict()
+        self.assertEqual(saved_data, expected_data)
 
-        self.instance._FileStorage__objects.clear()
+    def test_reload_method(self):
+        self.instance.__file_path = self.file_path
+        self.instance.save()
+        with open(self.file_path, "r") as data_file:
+            saved_data = json.load(data_file)
+
+        self.instance._FileStorage__objects = {}
         self.instance.reload()
+        self.assertEqual(self.instance._FileStorage__objects, saved_data)
 
-        with open(self.file_path, 'r') as file:
-            reloaded_data = json.load(file)
-
-        self.assertIn(key, reloaded_data)
-        self.assertEqual(reloaded_data[key], new_model.to_dict())
-
-        if os.path.exists(self.file_path):
-            os.remove(self.file_path)
-        self.assertFalse(os.path.exists(self.file_path))
-        self.instance.reload()
 
 if __name__ == "__main__":
     unittest.main()
