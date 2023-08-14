@@ -58,15 +58,15 @@ class TestBaseModel(unittest.TestCase):
     def test_created_at(self):
         """Test for the type of created_at"""
         self.assertEqual(self.type_1, type(self.my_model.created_at))
-    
+
     def test_to_dict_created_at_isoformat(self):
         self.assertEqual(self.my_model_json['created_at'],
                          self.my_model.created_at.isoformat())
-    
+
     def test_to_dict_updated_at_isoformat(self):
         self.assertEqual(self.my_model_json['updated_at'],
                          self.my_model.updated_at.isoformat())
-    
+
     def test_save_updates_updated_at(self):
         prev_updated_at = self.my_model.updated_at
         self.my_model.save()
@@ -75,7 +75,7 @@ class TestBaseModel(unittest.TestCase):
     def test_to_dict(self):
         """Test for to_dic method"""
         self.assertEqual(self.my_model_json, self.my_model.to_dict())
-    
+
     def test_to_dict_contains_correct_keys(self):
         keys = ['id', 'created_at', 'updated_at', '__class__']
         for key in keys:
@@ -83,7 +83,8 @@ class TestBaseModel(unittest.TestCase):
 
     def test_to_dict_returns(self):
         """
-        Test if to_dict method returns a dictionary with the correct attributes.
+        Test if to_dict method returns a
+        dictionary with the correct attributes.
         """
         base_model = BaseModel()
         base_model_dict = base_model.to_dict()

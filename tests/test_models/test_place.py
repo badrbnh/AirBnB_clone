@@ -2,12 +2,18 @@
 
 import unittest
 from models.place import Place
+from models.amenity import Amenity
+from models.city import City
+from models.user import User
 
 
 class TestAmenity(unittest.TestCase):
 
     def setUp(self):
         self.new_user = Place()
+        self.a_id = Amenity()
+        self.u_id = User()
+        self.c_id = City()
 
     def tearDown(self):
         del self.new_user
@@ -16,16 +22,19 @@ class TestAmenity(unittest.TestCase):
         self.assertEqual(self.new_user.city_id, "")
         self.assertEqual(self.new_user.user_id, "")
         self.assertEqual(self.new_user.description, "")
-        self.assertEqual(self.new_user.number_rooms, int)
-        self.assertEqual(self.new_user.number_bathrooms, int)
-        self.assertEqual(self.new_user.max_guest, int)
-        self.assertEqual(self.new_user.price_by_night, int)
-        self.assertEqual(self.new_user.latitude, float)
-        self.assertEqual(self.new_user.amenity_ids, [""])
+        self.assertEqual(self.new_user.name, "")
+        self.assertEqual(self.new_user.number_rooms, 0)
+        self.assertEqual(self.new_user.number_bathrooms, 0)
+        self.assertEqual(self.new_user.max_guest, 0)
+        self.assertEqual(self.new_user.price_by_night, 0)
+        self.assertEqual(self.new_user.longitude, 0.0)
+        self.assertEqual(self.new_user.latitude, 0.0)
+        self.assertEqual(self.new_user.amenity_ids, [])
 
     def test_user_attribute(self):
-        self.new_user.city_id = "435feaf"
-        self.new_user.user_id = "fez5fz"
+        self.new_user.city_id = self.c_id.id
+        self.new_user.user_id = self.u_id.id
+        self.new_user.name = "Betty"
         self.new_user.description = "Great Place"
         self.new_user.number_rooms = 6
         self.new_user.number_bathrooms = 4
@@ -33,18 +42,20 @@ class TestAmenity(unittest.TestCase):
         self.new_user.price_by_night = 300
         self.new_user.latitude = 9.145
         self.new_user.longitude = 25.54
-        self.new_user.amenity_ids = ["353565", "f536zf4", "4daz53"]
+        self.new_user.amenity_ids = [self.a_id.id]
 
-        self.assertEqual(self.new_user.city_id, "435feaf")
-        self.assertEqual(self.new_user.user_id, "fez5fz")
+        self.assertEqual(self.new_user.city_id, self.c_id.id)
+        self.assertEqual(self.new_user.user_id, self.u_id.id)
         self.assertEqual(self.new_user.description, "Great Place")
+        self.assertEqual(self.new_user.name, "Betty")
         self.assertEqual(self.new_user.number_rooms, 6)
         self.assertEqual(self.new_user.number_bathrooms, 4)
         self.assertEqual(self.new_user.max_guest, 6)
         self.assertEqual(self.new_user.price_by_night, 300)
         self.assertEqual(self.new_user.latitude, 9.145)
         self.assertEqual(self.new_user.longitude, 25.54)
-        self.assertEqual(self.new_user.amenity_ids, ["353565", "f536zf4", "4daz53"])
+        self.assertEqual(self.new_user.amenity_ids,
+                         [self.a_id.id])
 
 
 if __name__ == '__main__':
