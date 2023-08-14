@@ -81,3 +81,4 @@ The project file structure is organized as follows:
 This project is licensed under the [MIT License](LICENSE).
 
 ---
+>>>>>>> main
