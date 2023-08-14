@@ -49,6 +49,26 @@ class HBNBCommand(cmd.Cmd):
 
     prompt = "(hbnb) "
 
+    def default(self, line):
+        """ default behaviour for cmd module when input """
+        arg_dict = {
+            "all": self.do_all,
+            "show": self.do_show,
+            "destroy": self.do_destroy,
+            "count": self.do_count,
+            "update": self.do_update
+        }
+        match = re.search(r"\.", line)
+        if match is not None:
+            arg_list = [line[:match.span()[0]], line[match.span()[1]:]]
+            match = re.search(r"\((.*?)\)", arg_list[1])
+            if match is not None:
+                cmd = [arg_list[1][:match.span()[0]], match.group()[1:-1]]
+                if cmd[0] in arg_dict.keys():
+                    call = "{} {}".format(arg_list[0], cmd[1])
+                    return arg_dict[cmd[0]](call)
+        print("*** Unknown syntax: {}".format(line))
+
     def do_quit(self, line):
         """Quit command to exit the program"""
         return True
