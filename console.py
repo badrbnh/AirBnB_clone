@@ -49,6 +49,27 @@ class HBNBCommand(cmd.Cmd):
 
     prompt = "(hbnb) "
 
+    def default(self, line):
+        """default behaviour for cmd module when input"""
+        arg_dict = {
+                "all": self.do_all,
+                "show": self.do_show,
+                "destroy": self.do_destroy,
+                "count": self.do_count,
+                "update": self.do_update,
+                "create": self.do_create
+            }
+        match = re.search(r"\.", line)
+        if match is not None:
+            arg_list = [line[: match.span()[0]], line[match.span()[1]:]]
+            match = re.search(r"\((.*?)\)", arg_list[1])
+            if match is not None:
+                cmd = [arg_list[1][: match.span()[0]], match.group()[1:-1]]
+                if cmd[0] in arg_dict.keys():
+                    call = "{} {}".format(arg_list[0], cmd[1])
+                    return arg_dict[cmd[0]](call)
+        print("*** Unknown syntax: {}".format(line))
+
     def do_quit(self, line):
         """Quit command to exit the program"""
         return True
@@ -147,7 +168,15 @@ class HBNBCommand(cmd.Cmd):
         args = parse(line)
 
         if len(args) > 0:
-            class_name = args[0]
+            if '.' in args[0]:
+                class_name, method = args[0].split('.')
+                if method != 'all':
+                    print("** Unknown syntax **")
+                    return
+            else:
+                class_name = args[0]
+                method = 'all'
+            
             try:
                 class_ = globals()[class_name]
             except KeyError:
@@ -155,14 +184,16 @@ class HBNBCommand(cmd.Cmd):
                 return
         else:
             class_name = None
+            method = 'all'
 
-        objl = []
-
-        for obj in storage.all().values():
-            if class_name is None or isinstance(obj, class_):
-                objl.append(obj.__str__())
-
-        print(objl)
+        instances = storage.all()
+        objects = [str(v) for k, v in instances.items()
+                if class_name == k.split('.')[0]]
+        
+        if method == 'all':
+            print(objects)
+        else:
+            print("** Unknown syntax **")
 
     def do_count(self, line):
         """Usage: count <class> or <class>.count()
