@@ -15,6 +15,7 @@ h2{
     font-size: 30px;
 }
 .home{
+
     width: 390px;
     margin: 20px;
     padding: 20px;
@@ -26,6 +27,7 @@ h2{
     text-align: center;
 }
 .suite{
+
     width: 390px;
     margin: 20px 20px 20px 250px;
     padding: 20px;
@@ -37,6 +39,7 @@ h2{
 }
 
 .tiny{
+
     width: 390px;
     margin: 20px;
     padding: 20px;
