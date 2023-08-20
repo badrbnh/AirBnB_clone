@@ -23,11 +23,11 @@ button:hover {
   opacity: 90%;
 }
 
-ul {
+.popover-ulist {
   list-style-type: none;
   padding-top: 30px;
 }
-li {
+.popover-list {
   padding-left: 30px;
   padding-top: 5px;
 }

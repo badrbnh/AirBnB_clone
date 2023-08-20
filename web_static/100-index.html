@@ -21,15 +21,15 @@
             <h3 class="heading-m">States</h3>
             <h4 class="heading-s">California,Arizona...</h4>
             <div class="popover">
-              <ul>
+              <ul class="popover-ulist">
                 <h2>Arizona:</h2>
-                <li>Page</li>
-                <li>Page2</li>
+                <li class="popover-list">Page</li>
+                <li class="popover-list">Page2</li>
               </ul>
-              <ul>
+              <ul class="popover-ulist">
                 <h2>California:</h2>
-                <li>San Francisco</li>
-                <li>Los Altos</li>
+                <li class="popover-list">San Francisco</li>
+                <li class="popover-list">Los Altos</li>
               </ul>
             </div>
           </div>
@@ -37,11 +37,11 @@
             <h3 class="heading-m">Amenities</h3>
             <h4 class="heading-s">Internet,Kitchen...</h4>
             <div class="popover">
-              <ul>
-                <li>Internet</li>
-                <li>Tv</li>
-                <li>Kitchen</li>
-                <li>Iron</li>
+              <ul class="popover-ulist">
+                <li class="popover-list">Internet</li>
+                <li class="popover-list">Tv</li>
+                <li class="popover-list">Kitchen</li>
+                <li class="popover-list">Iron</li>
               </ul>
             </div>
           </div>
@@ -53,7 +53,7 @@
             <article class="home">
               <div class="home-price">
                 <h2 class="places-name">My home</h2>
-                <div class="price_by_night">80$</div>
+                <div class="price_by_night">$80</div>
               </div>
               <div class="information">
                 <div class="max_guest">
@@ -87,17 +87,45 @@
               </div>
               <div class="amenities-desc">
                 <h2 class="amenities-title">Amenities</h2>
-                <ul>
-                  <li>TV</li>
-                  <li>WiFi</li>
-                  <li>Pets friendly</li>
+                <ul class="ulist">
+                  <li class="list">
+                    <div class="tv-icon"></div>
+                    TV
+                  </li>
+                  <li class="list">
+                    <div class="wifi-icon"></div>
+                    WiFi
+                  </li>
+                  <li class="list">
+                    <div class="pet-icon"></div>
+                    Pets friendly
+                  </li>
+                </ul>
+              </div>
+              <div class="reviews">
+                <h2 class="review-title">2 Reviews</h2>
+                <ul class="review-ulist">
+                  <li class="review-list">
+                    <h3 class="review-head">
+                      From Bob Dylan the 27th January 2017
+                    </h3>
+                    <p class="review-p">
+                      Runshi is an epic host. Nothing more i can say. 5 star!
+                    </p>
+                  </li>
+                  <li class="review-list">
+                    <h3 class="review-head">
+                      From Connor the 4th January 2017
+                    </h3>
+                    <p class="review-p">Highly recommended!</p>
+                  </li>
                 </ul>
               </div>
             </article>
             <article class="tiny">
               <div class="home-price">
                 <h2 class="places-name">Tiny house</h2>
-                <div class="price_by_night">65$</div>
+                <div class="price_by_night">$65</div>
               </div>
               <div class="information">
                 <div class="max_guest">
@@ -126,17 +154,37 @@
               </div>
               <div class="amenities-desc">
                 <h2 class="amenities-title">Amenities</h2>
-                <ul>
-                  <li>TV</li>
-                  <li>WiFi</li>
-                  <li>Pets friendly</li>
+                <ul class="ulist">
+                  <li class="list">
+                    <div class="pet-icon"></div>
+                    Pets friendly
+                  </li>
                 </ul>
+                <div class="reviews">
+                  <h2 class="review-title">1 Reviews</h2>
+                  <ul class="review-ulist">
+                    <li class="review-list">
+                      <h3 class="review-head">
+                        From Max the 27th January 2017
+                      </h3>
+                      <p class="review-p">
+                        Fantastic place. It was clean, Adrienne was great (even
+                        though we did not meet in person) and everything went
+                        super smooth. Location is also great if you like running
+                        and something a bit more quiet. I would suggest a car or
+                        take into consideration that you might have to Uber into
+                        the city from the location. Overall, would recommend the
+                        place anytime.
+                      </p>
+                    </li>
+                  </ul>
+                </div>
               </div>
             </article>
             <article class="suite">
               <div class="home-price">
                 <h2 class="places-name">A suite</h2>
-                <div class="price_by_night">190$</div>
+                <div class="price_by_night">$190</div>
               </div>
               <div class="information">
                 <div class="max_guest">
@@ -167,10 +215,50 @@
               </div>
               <div class="amenities-desc">
                 <h2 class="amenities-title">Amenities</h2>
-                <ul>
-                  <li>TV</li>
-                  <li>WiFi</li>
-                  <li>Pets friendly</li>
+                <ul class="ulist">
+                  <li class="list">
+                    <div class="tv-icon"></div>
+                    TV
+                  </li>
+                  <li class="list">
+                    <div class="wifi-icon"></div>
+                    WiFi
+                  </li>
+                </ul>
+              </div>
+              <div class="reviews">
+                <h2 class="review-title">3 Reviews</h2>
+                <ul class="review-ulist">
+                  <li class="review-list">
+                    <h3 class="review-head">From Laila the 15th Mars 2023</h3>
+                    <p class="review-p">Incredible place. 5 stars!</p>
+                  </li>
+                  <li class="review-list">
+                    <h3 class="review-head">From Betty the 4th January 2019</h3>
+                    <p class="review-p">
+                      I recently had the pleasure of staying in this fantastic
+                      suite through Airbnb, and I must say, it exceeded all my
+                      expectations. From the moment I walked in, I was impressed
+                      by the attention to detail and the thoughtfully designed
+                      space.
+                    </p>
+                  </li>
+                  <li class="review-list">
+                    <h3 class="review-head">
+                      From Badreddine the 20th December 2019
+                    </h3>
+                    <p class="review-p">
+                      Absolutely loved my stay at this Airbnb suite! The
+                      attention to detail in the design and furnishings was
+                      impressive, creating a cozy yet stylish atmosphere. The
+                      suite's prime location made it incredibly convenient to
+                      explore the city's attractions and dining options. The
+                      host's hospitality was exceptional, with quick and helpful
+                      communication. I couldn't have asked for a better
+                      experience and would highly recommend this suite to anyone
+                      looking for a comfortable and well-situated getaway.
+                    </p>
+                  </li>
                 </ul>
               </div>
             </article>
