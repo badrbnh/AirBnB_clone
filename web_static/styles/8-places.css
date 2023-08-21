@@ -1,3 +1,8 @@
+.places {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 .head-title {
   margin-top: 30px;
   margin-left: 10px;
@@ -7,27 +12,12 @@
 
 .places-container {
   display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
 }
 h2 {
   font-size: 30px;
 }
-.home {
-  width: 390px;
-  margin: 20px;
-  padding: 20px;
-  border: 1px solid #ff5a5f;
-  border-radius: 4px;
-}
-.suite {
-  width: 390px;
-  margin: 20px 20px 20px 250px;
-  padding: 20px;
-  border: 1px solid #ff5a5f;
-  border-radius: 4px;
-}
-
+.home,
+.suite,
 .tiny {
   width: 390px;
   margin: 20px;

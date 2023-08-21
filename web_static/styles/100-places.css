@@ -1,3 +1,8 @@
+.places {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 .head-title {
   margin-top: 30px;
   margin-left: 10px;
@@ -7,8 +12,6 @@
 
 .places-container {
   display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
 }
 .places-name {
   font-size: 30px;
@@ -22,7 +25,7 @@
 }
 .suite {
   width: 390px;
-  margin: 20px 20px 20px 250px;
+  margin: 20px;
   padding: 20px;
   border: 1px solid #ff5a5f;
   border-radius: 4px;
@@ -166,30 +169,29 @@
   margin-right: 5px;
 }
 
-.reviews{
-    margin-top: 40px;
+.reviews {
+  margin-top: 40px;
 }
 
-.review-title{
-    font-size: 16px;
-    border-bottom: 1px solid #dddddd;
-    padding-bottom: 15px;
+.review-title {
+  font-size: 16px;
+  border-bottom: 1px solid #dddddd;
+  padding-bottom: 15px;
 }
 
-.review-ulist{
-    margin-top: 15px;
+.review-ulist {
+  margin-top: 15px;
 }
 
-.review-list{
-    list-style-type: none;
-
+.review-list {
+  list-style-type: none;
 }
 
-.review-head{
-    font-size: 14px;
+.review-head {
+  font-size: 14px;
 }
-.review-p{
-    font-size: 12px;
-    padding-top: 3px;
-    padding-bottom: 20px;
+.review-p {
+  font-size: 12px;
+  padding-top: 3px;
+  padding-bottom: 20px;
 }
