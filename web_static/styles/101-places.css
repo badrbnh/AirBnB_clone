@@ -4,8 +4,7 @@
   align-items: center;
 }
 .places-container {
-  display: flex;
-  justify-content: center;
+    display: flex;
 }
 .head-title {
   margin-top: 30px;
@@ -25,8 +24,6 @@
   padding: 20px;
   border: 1px solid #ff5a5f;
   border-radius: 4px;
-  display: flex;
-  flex-direction: column;
 }
 
 .home-price {
