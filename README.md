@@ -76,9 +76,5 @@ The project file structure is organized as follows:
 - [Badreddine Bentiah](https://github.com/badrbnh/) (Team Member)
 - [Nour MELLAL](https://github.com/NourMellal/) (Team Member)
 
-## License
-
-This project is licensed under the [MIT License](LICENSE).
-
 ---
 >>>>>>> main
