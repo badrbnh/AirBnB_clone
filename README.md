@@ -74,6 +74,10 @@ The project file structure is organized as follows:
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
+## Code of Conduct
+
+Please read the [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md) file for details on our code of conduct.
+
 ## Contributing
 
 Please read the [CONTRIBUTING.md](CONTRIBUTING.md) file for details on how to contribute to this project.
