@@ -70,6 +70,14 @@ The project file structure is organized as follows:
 - `models/engine/`: Directory containing the storage engine implementation.
 - `tests/`: Directory containing unit tests for the project.
 
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Contributing
+
+Please read the [CONTRIBUTING.md](CONTRIBUTING.md) file for details on how to contribute to this project.
+
 ## Contributors
 
 - Guillaume (Project Mentor)
@@ -77,4 +85,5 @@ The project file structure is organized as follows:
 - [Nour MELLAL](https://github.com/NourMellal/) (Team Member)
 
 ---
->>>>>>> main
+
+
